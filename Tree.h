@@ -52,10 +52,18 @@ public:
 		root = nullptr;
 	}
 
+	
+
 
 	//Tree(Tree const& other) {
 	//	/*other дай нам все свои значения 
 	//	мы вызовим   от всех этих значений метод insert и добавим в this дерево */
+	//	root->data = other.root->data;
+	//	Node* tmp = other.root;
+	//	while (tmp) {
+	//		this->insert(tmp->data);
+	//		if (tmp == nullptr) { goto; }
+	//	}
 	//}
 	void Printer_tree() {
 		//Node* tmp = current;
@@ -115,6 +123,27 @@ public:
 		erase(replace_val);
 		current->data = replace_val;
 		return true;
+	}
+
+	bool chek(int value) {
+		Node* tmp = root;
+		while (tmp) {
+			if (value > tmp->data) {
+				if (tmp->right == nullptr) {
+					return false;
+				}
+				tmp = tmp->right;
+			}
+			else if (value < tmp->data) {
+				if (tmp->left == nullptr) {
+					return false;
+				}
+				tmp = tmp->left;
+			}
+			else {
+				return true;
+			}
+		}
 	}
 	bool insert(int data) {
 		Node* tmp = root;
