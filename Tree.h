@@ -16,15 +16,9 @@ private:
 		Node* right;
 		Node(int data, Node* left = nullptr, Node* right = nullptr) : data(data), left(left), right(right) {}
 	};
-
+	int size = 0;
 	Node* root = nullptr;
 
-	void Printer_obj(Node* current) {
-		if (current == nullptr) return;
-		Printer_obj(current->left);
-		cout << current->data << " ";
-		Printer_obj(current->right);
-	}
 	void all_delete(Node* current) {
 		if (current->left != nullptr) {
 			all_delete(current->left);
@@ -34,16 +28,22 @@ private:
 		}
 		delete current;
 	}
-
+	
+	void Printer_obj(Node* current) {
+		if (current == nullptr) return;
+		Printer_obj(current->left);
+		cout << current->data << " ";
+		Printer_obj(current->right);
+	}
 
 public:
 	void Tree_del() {
 		all_delete(root);
 	}
 
-	/*~Tree() {
+	~Tree() {
 		all_delete(root);
-	}*/
+	}
 
 	Tree(int data) {
 		root = new Node(data);
@@ -52,9 +52,21 @@ public:
 		root = nullptr;
 	}
 
-	
+	int get_size() { return this->size; }
 
+	void get_all_elements(vector<int> &elements, Node* current ) {
 
+		if (current == nullptr) {return;}
+		elements.push_back(current->data);
+		get_all_elements(elements,current->left);
+		get_all_elements(elements,current->right);
+	}
+	void Printer_tree() {
+		if (root == nullptr) return;
+		Printer_obj(root->left);
+		cout << root->data << " ";
+		Printer_obj(root->right);
+	}
 	//Tree(Tree const& other) {
 	//	/*other дай нам все свои значения 
 	//	мы вызовим   от всех этих значений метод insert и добавим в this дерево */
@@ -65,13 +77,7 @@ public:
 	//		if (tmp == nullptr) { goto; }
 	//	}
 	//}
-	void Printer_tree() {
-		//Node* tmp = current;
-		if (root == nullptr) return;
-		Printer_obj(root->left);
-		cout << root->data << " ";
-		Printer_obj(root->right);
-	}
+
 	bool erase(int key) {
 		Node* current = root;
 		Node* parent = nullptr;
@@ -99,6 +105,7 @@ public:
 				parent->right = current->right;
 			}
 			delete current;
+			this->size--;
 			return true;
 		}
 
@@ -111,6 +118,7 @@ public:
 				parent->right = current->left;
 			}
 			delete current;
+			this->size--;
 			return true;
 		}
 
@@ -122,6 +130,7 @@ public:
 		int replace_val = replace->data;
 		erase(replace_val);
 		current->data = replace_val;
+		this->size--;
 		return true;
 	}
 
@@ -149,12 +158,14 @@ public:
 		Node* tmp = root;
 		if (root == nullptr) {
 			root = new Node(data);
+			this->size++;
 			return true;
 		}
 		while (tmp) {
 			if (data > tmp->data) {
 				if (tmp->right == nullptr) {
 					tmp->right = new Node(data);
+					this->size++;
 					return true;
 				}
 				tmp = tmp->right;
@@ -162,6 +173,7 @@ public:
 			else if (data < tmp->data) {
 				if (tmp->left == nullptr) {
 					tmp->left = new Node(data);
+					this->size++;
 					return true;
 				}
 				tmp = tmp->left;

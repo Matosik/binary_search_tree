@@ -1,6 +1,8 @@
 #include "Tree.h"
 #include "Collection.h"
 #include <time.h>
+#include <vector>
+#include <list>
 using namespace std;
 
 
@@ -20,9 +22,9 @@ int check()
 	return number;
 }
 
-Tree union_(const Tree& a, const Tree& b) {
-	for (int )
-}
+//Tree union_(const Tree& a, const Tree& b) {
+//	for (int )
+//}
 
 //Tree symmenric_difference(const Tree& a, const Tree& b) {
 //	return;
@@ -351,10 +353,68 @@ void speed_test() {
 }
 
 
+double vec_fill(int count) {
+	int mid_time = 0;
+	vector<int> myV;
+	for (int i = 0; i < 100; i++) {
+		clock_t start = clock();
+		for (int j = 0; j <count; j++) { //
+			myV.push_back(lcg());
+		}
+		clock_t end = clock();
+		mid_time += end - start;
+		myV.clear();
+	}
+	return mid_time / 100;
+}
+double vec_seek(int count) {
+	vector<int> myV;
+	int mid_time = 0;
+	for (int j = 0; j < count; j++) {
+		myV.push_back(lcg());
+	}
+	mid_time = 0;
+	clock_t start = clock();
+	for (int i = 0; i < 1000; i++) {
+		find(myV.begin(), myV.end(), lcg()) != myV.end();
+	}
+	clock_t end = clock();
+	mid_time = end - start / 1000;
+	return mid_time;
+}
+void check_time_vector() {
+	cout << "Cреднее время заполнения ВЕКТОРА на 1.000 элементов: "<<vec_fill(1000)<<endl;
+	cout << "Cреднее время заполнения ВЕКТОРА на 10.000 элементов: " << vec_fill(10000)<< endl;
+	cout << "Cреднее время заполнения ВЕКТОРА на 100.000 элементов: " << vec_fill(100000) << endl<<endl;
+	//=====================поиск элемента====================================
+	
+	cout << "Cреднее время поиска элемента в  ВЕКТОРЕ на 1.000 элементов: " << vec_seek(1000) << endl;
+	cout << "Cреднее время поиска элемента в  ВЕКТОРЕ на 10.000 элементов: " <<vec_seek(10000) << endl;
+	cout << "Cреднее время поиска элемента в  ВЕКТОРЕ на 100.000 элементов: " << vec_seek(100000) << endl<<endl;
+
+
+
+
+}
+
+//void  test() {
+//	Tree myT(10);
+//	myT.insert(5);
+//	myT.insert(15);
+//	myT.insert(2);
+//	myT.insert(6);
+//	myT.insert(13);
+//	myT.insert(16);
+//	vector<int>  vec;
+//	myT.get_all_elements(vec, myT.);
+//
+//}
 int main() {
 	setlocale(LC_ALL, "ru");
-	mission();
-	//speed_test();
+	//mission();
+	speed_test();
+	check_time_vector();
+	//test();
 	_getch();
 	return 1;
 }

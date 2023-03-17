@@ -51,7 +51,7 @@ public:
 			coll[i] = coll[i + 1];
 		}
 		index = 0;
-		size--;
+		size-- ;
 		Tree* new_coll = new Tree(size);
 		for (int i = 0; i < size; i++) {
 			new_coll[i] = coll[i];
