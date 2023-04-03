@@ -2,7 +2,6 @@
 #include <iostream>
 #include <conio.h>
 #include <vector>
-#include "windows.h"
 
 using namespace std;
 
@@ -36,14 +35,56 @@ private:
 		Printer_obj(current->right);
 	}
 
+	//=========AI code============================
+	void amaizing_print(Node* node, int indent) {
+		if (node == nullptr) {
+			return;
+		}
+
+		amaizing_print(node->right, indent + 4);
+		cout << string(indent, ' ') << node->data <<endl;
+		amaizing_print(node->left, indent + 4);
+	}
+
+	void copy(Node*& dest, Node* src) {
+		if (src == nullptr) {
+			dest = nullptr;
+			return;
+		}
+
+		dest = new Node(src->data);
+		copy(dest->left, src->left);
+		copy(dest->right, src->right);
+	}
+	void get_all_dataHelper(Node* node, vector<int>& result) const {
+		if (node != nullptr) {
+			get_all_dataHelper(node->left, result);
+			result.push_back(node->data);
+			get_all_dataHelper(node->right, result);
+		}
+	}
+
 public:
+	vector<int>  get_all_data() const {
+		vector<int> result;
+		get_all_dataHelper(root, result);
+		return result;
+	}
+
+	Tree& operator =(const Tree& other) {
+		copy(this->root, other.root);
+
+		return *this;
+	}
 	void Tree_del() {
 		all_delete(root);
 	}
-
-	~Tree() {
-		all_delete(root);
+	Tree(const Tree &other){
+		copy(root, other.root);
 	}
+	/*~Tree() {
+		all_delete(root);
+	}*/
 
 	Tree(int data) {
 		root = new Node(data);
@@ -52,7 +93,7 @@ public:
 		root = nullptr;
 	}
 
-	int get_size() { return this->size; }
+	int get_size() const { return this->size; }
 
 	void get_all_elements(vector<int> &elements, Node* current ) {
 
@@ -61,22 +102,17 @@ public:
 		get_all_elements(elements,current->left);
 		get_all_elements(elements,current->right);
 	}
+
+
+	void Printer_tree_amaizing() {
+		amaizing_print(root, 0);
+	}
 	void Printer_tree() {
 		if (root == nullptr) return;
 		Printer_obj(root->left);
 		cout << root->data << " ";
 		Printer_obj(root->right);
 	}
-	//Tree(Tree const& other) {
-	//	/*other дай нам все свои значения 
-	//	мы вызовим   от всех этих значений метод insert и добавим в this дерево */
-	//	root->data = other.root->data;
-	//	Node* tmp = other.root;
-	//	while (tmp) {
-	//		this->insert(tmp->data);
-	//		if (tmp == nullptr) { goto; }
-	//	}
-	//}
 
 	bool erase(int key) {
 		Node* current = root;
@@ -134,7 +170,7 @@ public:
 		return true;
 	}
 
-	bool chek(int value) {
+	bool chek(int value) const {
 		Node* tmp = root;
 		while (tmp) {
 			if (value > tmp->data) {

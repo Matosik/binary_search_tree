@@ -1,9 +1,7 @@
 #include "Tree.h"
 #include "Collection.h"
-#include <time.h>
-#include <vector>
-#include <list>
-using namespace std;
+#include "test_time.h"
+#include "windows.h"
 
 
 int check()
@@ -22,13 +20,48 @@ int check()
 	return number;
 }
 
-//Tree union_(const Tree& a, const Tree& b) {
-//	for (int )
-//}
+bool mini(int f, int s) {
+	if (f < s) { return true; }
+	return false;
+}
+Tree union_(const Tree& a, const Tree& b) {
+	Tree result = b;
+	vector<int> elements = a.get_all_data();
+	for (int i = 0; i < a.get_size(); i++) {
+		result.insert(elements[i]);
+	}
+	return result;
+}
+Tree symmenric_difference(const Tree& a, const Tree& b) {
+	Tree result = union_(a, b);
+	int n;
+	vector<int> elements;
+	if (mini(a.get_size(), b.get_size())) {
+		n = a.get_size();
+		elements = a.get_all_data();
+		for (int i = 0; i < a.get_size(); i++) {
+			if (b.chek(elements[i])) {
+				result.erase(elements[i]);
+			}
+		}
+	}
+	else {
+		n = b.get_size();
+		elements = b.get_all_data();
+		for (int i = 0; i < b.get_size(); i++) {
+			if (a.chek(elements[i])) {
+				result.erase(elements[i]);
+			}
+		}
+	}
+	return result;
+}
 
-//Tree symmenric_difference(const Tree& a, const Tree& b) {
-//	return;
-//}
+
+void next_programm() {
+	cout << "\n\n\t\t\t\tНажмите любую кнопку, чтобы продолжить";
+	_getch();
+}
 void print_all_coll(Collection& coll) {
 	system("cls");
 	for (int i = 0; i < coll.get_size_coll(); i++) {
@@ -37,6 +70,10 @@ void print_all_coll(Collection& coll) {
 		cout << " }\n\n";
 	}
 
+}
+
+void add_tree_in_coll(Tree a, Collection coll) {
+	coll.add_collection(a);
 }
 void loading_animation(int value) {
 	system("cls");
@@ -90,8 +127,7 @@ void add_in_coll(Collection &coll) {
 		cout << "\n\n\t\tНаверное все элементы были добавлены\n\t   Если захотите добавить еще элементы можете сделать это в главном меню.";
 	}
 	coll.add_collection(newTree);
-	cout << "\n\n\t\t Нажмите любую кнопку,чтобы вернуться в главное меню.";
-	_getch();
+	next_programm();
 }
 void add_elements(Collection &coll) {
 	system("cls");
@@ -133,12 +169,12 @@ void erase_elements(Collection& coll) {
 	val = check();
 	bool flag = coll[id].erase(val);
 	if (flag) {
-		cout<<"\n\t\t\tУдаление прошло успешно!!!\n\n\t\t\tНажмите любую кнопку чтобы продолжить";
+		cout<<"\n\t\t\tУдаление прошло успешно!!!";
 	}
 	else {
-		cout << "\n\t\t  Tакого элемента нет. Попробуйте удалить сущесвующий элемент вдруг получится ;)\n\n\t\t  Нажмите любую кнопку чтобы вернуться в меню выбора ";
+		cout << "\n\t\t  Tакого элемента нет. Попробуйте удалить сущесвующий элемент вдруг получится ;)";
 	}
-	_getch();
+	next_programm();
 }
 void del_from_coll(Collection &coll) {
 
@@ -167,9 +203,9 @@ int menu1() {
 int menu_action() {
 	while (true) {
 		system("cls");
-		cout << "\n\n\n\t Добавить элемент в дерево - [1]\n\t Удалить элемент из дерева - [2]\n\t Объеденить 2 множества(дерева) - [3]\n\t Симметрическая разность 2 множеств(деревьев) - [4]\n\t Проверить есть ли элемент - [5]\n\t Назад - [esc]";
+		cout << "\n\n\n\t Добавить элемент в дерево - [1]\n\t Удалить элемент из дерева - [2]\n\t Объеденить 2 множества(дерева) - [3]\n\t Симметрическая разность 2 множеств(деревьев) - [4]\n\t Проверить есть ли элемент - [5]\n\t Вывести дерево в красивом(нет) виде - [6]\n\t Удалить дерево - [7]\n\t Назад - [esc]";
 		int key = _getch();
-		if (key == 27 || key == 49 || key == 50 || key ==51|| key ==52|| key ==53){ return key; }
+		if (key == 27 || key == 49 || key == 50 || key ==51|| key ==52|| key ==53|| key == 54|| key == 55){ return key; }
 	}
 }
 
@@ -199,8 +235,7 @@ menu:
 		
 		case 50:
 			print_all_coll(collection);
-			cout << "\n\n\t\t\t\tНажмите любую кнопку, чтобы продолжить";
-			_getch();
+			next_programm();
 			goto menu;
 		case 51:
 			
@@ -211,8 +246,8 @@ menu:
 	}
 menuAct:
 	system("cls");
-	bool flag;
 	int key= menu_action();
+	int id, count, val;
 	switch (key) {
 	case 49:
 		add_elements(collection);
@@ -221,12 +256,74 @@ menuAct:
 		erase_elements(collection);
 		goto menuAct;
 	case 51:
+		system("cls");
+		print_all_coll(collection);
+		cout << "\n\n\t\t Введите индексы множеств, которые хотите объеденить: \n\t Первый id: ";
+		int id1, id2;
+		id1 = check();
+		while (id1<=collection.get_size_coll()|| id1<0) {
+			cout << "\n\n\tВведите существующий id дерева: ";
+			id1 = check();
+		}
+		cout << "\tВторой id: ";
+		id2 = check();
+		while (id2 <= collection.get_size_coll() || id2 < 0) {
+			cout << "\n\n\tВведите существующий id дерева: ";
+			id2 = check();
+		}
+		Tree result = union_(collection[id1], collection[id2]);
+
+		cout << "\n\t\t Хотите доавить это дерево в коллекцию?\n\t\t esc - no\n\t\t enter - yes ";
+		int flag;
+		while (true) {
+			flag = _getch();
+			if (flag == 13 || flag == 27) { break; }
+		}
+		if (flag == 27)
+		{
+			cout << "\n\tХозяин - барин. дерево не добавлено:(";
+		}
+		else {
+			add_tree_in_coll(result, collection);
+			cout << "\n\tХозяин - барин. дерево  добавлено:)";
+		}
+		next_programm();
 		goto menuAct;
 	case 52:
+		system("cls");
+		print_all_coll(collection);
+		cout << "\n\n\t\t Введите индексы множеств, из которых хотите получить симметрическую разность: \n\t Первый id: ";
+		id1 = check();
+		while (id1 <= collection.get_size_coll() || id1 < 0) {
+			cout << "\n\n\tВведите существующий id дерева: ";
+			id1 = check();
+		}
+		cout << "\tВторой id: ";
+		id2 = check();
+		while (id2 <= collection.get_size_coll() || id2 < 0) {
+			cout << "\n\n\tВведите существующий id дерева: ";
+			id2 = check();
+		}
+		Tree result2 = symmenric_difference(collection[id1], collection[id2]);
+		result2.Printer_tree();
+
+		cout << "\n\t\t Хотите доавить это дерево в коллекцию?\n\t\t esc - no\n\t\t enter - yes ";
+		while (true) {
+			flag = _getch();
+			if (flag == 13 || flag == 27) { break; }
+		}
+		if (flag == 27)
+		{
+			cout << "\n\tХозяин - барин. дерево не добавлено:(";
+		}
+		else{
+			add_tree_in_coll(result2, collection);
+			cout << "\n\tХозяин - барин. дерево  добавлено:)";
+		}
+		next_programm();
 		goto menuAct;
 	case 53:
 		system("cls");
-		int id, count, val;
 		print_all_coll(collection);
 		cout << "\n\n\t\tВведите id дерева, в котором хотите проверить элемент: ";
 		id = check();
@@ -238,183 +335,63 @@ menuAct:
 		}
 		cout << "\n\t\tВведите элемент который нужно найти - ";
 		val=check();
-		flag = collection[id].chek(val);
-		if (flag) {
-			cout << "\n\t\t\tЭлемент присутствует, не беспокойтесь! \n\n\t\t\tНажмите любую кнопку чтобы продолжить";
+		if (collection[id].chek(val)) {
+			cout << "\n\t\t\tЭлемент присутствует, не беспокойтесь!";
 		}
 		else {
-			cout << "\n\t\t\tТаких здесь не держим!!!\n\n\t\t\tНажмите любую кнопку чтобы продолжить";
+			cout << "\n\t\t\tТаких здесь не держим!!!";
 		}
-		_getch();
+		next_programm();
 		goto menuAct;
+	case 54:
+		system("cls");
+		cout << "\t\t\t Введите индекс дерева которое хотите вывести в консоль: ";
+		id = check();
+		while(id>=collection.get_size_coll() || id<0){
+			system("cls");
+			cout << " Введите корректный индекс от 0 до " << collection.get_size_coll()-1 << " : ";
+			id = check();
+		}
+		collection[id].Printer_tree_amaizing();
+		next_programm();
+	case 55:
+		system("cls");
+		cout << "\t\t\t Введите индекс дерева которое хотите вывести в консоль: ";
+		id = check();
+		while (id >= collection.get_size_coll() || id < 0) {
+			system("cls");
+			cout << " Введите корректный индекс от 0 до " << collection.get_size_coll() - 1 << " : ";
+			id = check();
+		}
+		cout << "\n\t\tВы уверенны что хотите удалить дерево?\n\t\t esc - no\n\t\t enter - yes";
+		while (true) {
+			flag= _getch();
+			if (flag == 27 || flag == 13) {
+				break;
+			}
+		}
+		if (flag == 13) {
+			collection.delete_index(id);
+			cout << "\n\n\tОооо нет вы срубили дерево 0_0 природа вам спасибо не скажет... ";
+		}
+		else {
+			cout << "\n\n\t\tФуууууух Грета Тунберг рада";
+		}
+		next_programm();
 	case 27:
 		goto menu;
 	}
 }
 
-size_t lcg() {
-	static size_t x = 0;
-	x = (1021 * x + 24631) % 116640;
-	return x;
-}
-
-int fill_time(int count) {
-	int start = clock();
-	Tree myTree;
-	for (int i = 0; i < count; i++) {
-		myTree.insert(lcg());
-	}
-	int end = clock();
-	return end - start;
-}
-double seek_time(int count) {
-	Tree myTree;
-	for (int i = 0; i < count; i++) {
-		myTree.insert(lcg());
-	}
-	clock_t start = clock();
-	for (int i = 0; i < 1000; i++) {
-		myTree.chek(lcg());
-		
-	}
-	clock_t end =  clock();
-	return (start-end) /1000;
-}
-double insert_time(int count) {
-	Tree myTree;
-	for (int i = 0; i < count; i++) {
-		myTree.insert(lcg());
-	}
-	int start = clock();
-	for (int i = 0; i < 1000; i++) {
-		myTree.insert(lcg());
-	}
-	int end = clock();
-	return (end - start)/1000;
-}
-double erase_time(int count) {
-	Tree myTree;
-	for (int i = 0; i < count; i++) {
-		myTree.insert(lcg());
-	}
-	int start = clock();
-	for (int i = 0; i < 1000; i++) {
-		myTree.erase(lcg());
-	}
-	int end = clock();
-	return (start-end) / 1000;
-}
-
-void speed_test() {
-	double mid_value = 0;
-	int fill_val;
-	for (int i = 0; i < 100; i++) {
-		fill_val = fill_time(1000);
-		mid_value += fill_val;
-	}
-	cout << "Среднее время заполнения дерева 1,000 элементами: " << mid_value / 100<<endl;
-
-
-	mid_value = 0;
-	for (int i = 0; i < 100; i++) {
-		fill_val = fill_time(10000);
-		mid_value += fill_val;
-	}
-	cout << "Среднее время заполнения дерева 10,000 элементами: " << mid_value / 100 << endl;
-
-	mid_value = 0;
-	for (int i = 0; i < 100; i++) {
-		fill_val = fill_time(100000);
-		mid_value += fill_val;
-	}
-	cout << "Среднее время заполнения дерева 100,000 элементами: " << mid_value / 100 << endl<<endl;
-
-	mid_value = 0;
-	for (int i = 0; i < 1000; i++) {
-		fill_val = seek_time(1000);
-		mid_value += fill_val;
-	}
-
-
-	cout << "Среднее время поиска элемента в дереве на 1,000 элементов: " << seek_time(1000)<<endl;
-	cout << "Среднее время поиска элемента в дереве на 10,000 элементов: " << seek_time(10000)<<endl;
-	cout << "Среднее время поиска элемента в дереве на 100,000 элементов: " << seek_time(100000)<<endl<<endl;
-
-	cout << "Среднее время ДОБАВЛЕНИЯ элемента в дерево на 1,000 элементов: " << insert_time(1000) << endl;
-	cout << "Среднее время ДОБАВЛЕНИЯ элемента в дерево на 10,000 элементов: " << insert_time(10000) << endl;
-	cout << "Среднее время ДОБАВЛЕНИЯ элемента в дерево на 100,000 элементов: " << insert_time(100000) <<endl <<endl;
-
-
-	cout << "Среднее время УДАЛЕНИЯ элемента из дерева на 1,000 элементов: " << erase_time(1000) << endl;
-	cout << "Среднее время УДАЛЕНИЯ элемента из дерева на 10,000 элементов: " << erase_time(10000) << endl;
-	cout << "Среднее время УДАЛЕНИЯ элемента из дерева на 100,000 элементов: " << erase_time(100000) <<endl<< endl;
-
-		
-}
-
-
-double vec_fill(int count) {
-	int mid_time = 0;
-	vector<int> myV;
-	for (int i = 0; i < 100; i++) {
-		clock_t start = clock();
-		for (int j = 0; j <count; j++) { //
-			myV.push_back(lcg());
-		}
-		clock_t end = clock();
-		mid_time += end - start;
-		myV.clear();
-	}
-	return mid_time / 100;
-}
-double vec_seek(int count) {
-	vector<int> myV;
-	int mid_time = 0;
-	for (int j = 0; j < count; j++) {
-		myV.push_back(lcg());
-	}
-	mid_time = 0;
-	clock_t start = clock();
-	for (int i = 0; i < 1000; i++) {
-		find(myV.begin(), myV.end(), lcg()) != myV.end();
-	}
-	clock_t end = clock();
-	mid_time = end - start / 1000;
-	return mid_time;
-}
-void check_time_vector() {
-	cout << "Cреднее время заполнения ВЕКТОРА на 1.000 элементов: "<<vec_fill(1000)<<endl;
-	cout << "Cреднее время заполнения ВЕКТОРА на 10.000 элементов: " << vec_fill(10000)<< endl;
-	cout << "Cреднее время заполнения ВЕКТОРА на 100.000 элементов: " << vec_fill(100000) << endl<<endl;
-	//=====================поиск элемента====================================
-	
-	cout << "Cреднее время поиска элемента в  ВЕКТОРЕ на 1.000 элементов: " << vec_seek(1000) << endl;
-	cout << "Cреднее время поиска элемента в  ВЕКТОРЕ на 10.000 элементов: " <<vec_seek(10000) << endl;
-	cout << "Cреднее время поиска элемента в  ВЕКТОРЕ на 100.000 элементов: " << vec_seek(100000) << endl<<endl;
 
 
 
 
-}
-
-//void  test() {
-//	Tree myT(10);
-//	myT.insert(5);
-//	myT.insert(15);
-//	myT.insert(2);
-//	myT.insert(6);
-//	myT.insert(13);
-//	myT.insert(16);
-//	vector<int>  vec;
-//	myT.get_all_elements(vec, myT.);
-//
-//}
 int main() {
 	setlocale(LC_ALL, "ru");
-	//mission();
-	speed_test();
-	check_time_vector();
-	//test();
+	mission();
+	//speed_test();
+	//check_time_vector();
 	_getch();
 	return 1;
 }
