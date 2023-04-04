@@ -150,8 +150,8 @@ void erase_elements(vector<Tree>& coll) {
 int menu0() {
 	while (true) {
 		system("cls");
-		cout << "\n\t\tДобавить первое древо - [1]\n\t\t";
-		cout << "Завершить работу      - [esc]";
+		cout << "\n\t\tДобавить первое древо - [ 1 ]\n\t\t";
+		cout << "Назад                 - [esc]";
 		int key= _getch();
 		if (key == 27 || key == 49) {
 			return key;
@@ -161,10 +161,10 @@ int menu0() {
 int menu1() {
 	while (true) {
 		system("cls");
-		cout << "\n\t\tСоздать лес          - [1]\n\t\t";
-		cout << "Показать все деревья - [2]\n\t\t";
-		cout << "Действия с деревьями - [3]\n\t\t";
-		cout << "Завершить работу     - [esc]";
+		cout << "\n\t\tСоздать лес          - [ 1 ]\n\t\t";
+		cout << "Показать все деревья - [ 2 ]\n\t\t";
+		cout << "Действия с деревьями - [ 3 ]\n\t\t";
+		cout << "Назад                - [esc]";
 
 		int key = _getch();
 		if (key == 27 || key == 49 || key == 50|| key ==51) { return key; }
@@ -173,19 +173,28 @@ int menu1() {
 int menu_action() {
 	while (true) {
 		system("cls");
-		cout << "\n\n\n\t Добавить элемент в дерево           - [1]";
-		cout << "\n\t Удалить элемент из дерева           - [2]";
-		cout << "\n\t Объеденить 2 множества(дерева)      - [3]";
-		cout << "\n\t Симметрическая разность 2 множеств  - [4]";
-		cout << "\n\t Проверить есть ли элемент           - [5]";
-		cout << "\n\t Вывести дерево в красивом(нет) виде - [6]";
-		cout << "\n\t Удалить дерево                      - [7]";
+		cout << "\n\n\n\t Добавить элемент в дерево           - [ 1 ]";
+		cout << "\n\t Удалить элемент из дерева           - [ 2 ]";
+		cout << "\n\t Объеденить 2 множества(дерева)      - [ 3 ]";
+		cout << "\n\t Симметрическая разность 2 множеств  - [ 4 ]";
+		cout << "\n\t Проверить есть ли элемент           - [ 5 ]";
+		cout << "\n\t Вывести дерево в красивом(нет) виде - [ 6 ]";
+		cout << "\n\t Удалить дерево                      - [ 7 ]";
 		cout << "\n\t Назад                               - [esc]";
 		int key = _getch();
 		if (key == 27 || key == 49 || key == 50 || key ==51|| key ==52|| key ==53|| key == 54|| key == 55){ return key; }
 	}
 }
-
+int selection_menu() {
+	int key;
+	while (true) {
+		cout << "\n\n\n\t\t\t\t Speed test - [ 1 ]\n";
+		cout << "\t\t\t\t Main task  - [ 2 ]\n";
+		cout << "\t\t\t\t Exit       - [esc]";
+		key = _getch();
+		if (key == 49 || key == 50 || key == 27) { return key; }
+	}
+}
 //the choice of tree in the collection
 void choice_trees_for_union(vector<Tree>& coll) {
 	system("cls");
@@ -382,12 +391,27 @@ interaction_menu:
 	case 27:
 		goto menu;
 	}
-
 }
+
 
 int main() {
 	setlocale(LC_ALL, "ru");
-	mission();
-	_getch();
+menu:
+	system("cls");
+	int menu_select = selection_menu();
+	switch (menu_select)
+	{
+	case 49:
+		system("cls");
+		speed_test_for_tree();
+		speed_test_for_vector();
+		next_programm();
+		goto menu;
+	case 50:
+		mission();
+		goto menu;
+	default:
+		break;
+	}
 	return 1;
 }

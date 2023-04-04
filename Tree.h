@@ -2,11 +2,7 @@
 #include <iostream>
 #include <conio.h>
 #include <vector>
-
 using namespace std;
-
-
-// Бинарный поиск
 class Tree {
 private:
 	struct Node {
@@ -35,7 +31,6 @@ private:
 		Printer_obj(current->right);
 	}
 
-	//=========AI code============================
 	void amaizing_print(Node* node, int indent) {
 		if (node == nullptr) {
 			return;
@@ -51,11 +46,11 @@ private:
 			dest = nullptr;
 			return;
 		}
-
 		dest = new Node(src->data);
 		copy(dest->left, src->left);
 		copy(dest->right, src->right);
 	}
+
 	void get_all_dataHelper(Node* node, vector<int>& result) const {
 		if (node != nullptr) {
 			get_all_dataHelper(node->left, result);
@@ -85,16 +80,14 @@ public:
 	~Tree() {
 		all_delete(root);
 	}
-
 	Tree(int data) {
 		root = new Node(data);
+		size++;
 	}
 	Tree() {
 		root = nullptr;
 	}
-
 	int get_size() const { return this->size; }
-
 	void get_all_elements(vector<int> &elements, Node* current ) {
 
 		if (current == nullptr) {return;}
@@ -102,8 +95,6 @@ public:
 		get_all_elements(elements,current->left);
 		get_all_elements(elements,current->right);
 	}
-
-
 	void Printer_tree_amaizing() {
 		amaizing_print(root, 0);
 	}
@@ -127,11 +118,9 @@ public:
 			}
 		}
 
-
 		if (!current) {
 			return false;
 		}
-
 		// у элемента 1 потомок
 		if (current->left == nullptr) {
 			if (parent && parent->left == current) {
@@ -157,7 +146,6 @@ public:
 			this->size--;
 			return true;
 		}
-
 		// у элемента 2 потомка
 		Node* replace = current->right;
 		while (replace->left) {
@@ -218,7 +206,5 @@ public:
 				return false;
 			}
 		}
-
 	}
-
 };
