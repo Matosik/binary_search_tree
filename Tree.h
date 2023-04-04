@@ -82,9 +82,9 @@ public:
 	Tree(const Tree &other){
 		copy(root, other.root);
 	}
-	/*~Tree() {
+	~Tree() {
 		all_delete(root);
-	}*/
+	}
 
 	Tree(int data) {
 		root = new Node(data);
