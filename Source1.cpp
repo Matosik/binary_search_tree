@@ -381,7 +381,6 @@ void choice_tree_for_add_element(vector<Tree>& coll) {
 	next_programm();
 }
 
-
 void mission() {
 	vector<Tree> collection;
 menu:

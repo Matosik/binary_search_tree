@@ -156,8 +156,6 @@ public:
 			this->size--;
 			return true;
 		}
-
-
 		if (current->right == nullptr) {
 			if (parent && parent->left == current) {
 				parent->left = current->left;
