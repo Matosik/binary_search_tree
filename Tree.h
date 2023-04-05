@@ -2,6 +2,7 @@
 #include <iostream>
 #include <conio.h>
 #include <vector>
+#include <algorithm>
 using namespace std;
 class Tree {
 private:
@@ -11,7 +12,7 @@ private:
 		Node* right;
 		Node(int data, Node* left = nullptr, Node* right = nullptr) : data(data), left(left), right(right) {}
 	};
-	int size = 0;
+	int size;
 	Node* root = nullptr;
 
 	void all_delete(Node* current) {
@@ -58,14 +59,27 @@ private:
 			get_all_dataHelper(node->right, result);
 		}
 	}
-
+	
 public:
 	vector<int>  get_all_data() const {
 		vector<int> result;
 		get_all_dataHelper(root, result);
 		return result;
 	}
+	bool operator ==(const Tree& other) {
+		vector<int>a = this->get_all_data();
+		vector<int>b = other.get_all_data();
+		if (a.size() != b.size()) {
+			return false;
+		}
+		for (int i = 0; i < a.size(); i++) {
+			if (a[i] != b[i]) {
+				return false;
+			}
+		}
+		return true;
 
+	}
 	Tree& operator =(const Tree& other) {
 		copy(this->root, other.root);
 
@@ -76,18 +90,22 @@ public:
 	}
 	Tree(const Tree &other){
 		copy(root, other.root);
+		this->size = other.size;
 	}
 	~Tree() {
 		all_delete(root);
 	}
 	Tree(int data) {
 		root = new Node(data);
-		size++;
+		this->size=1;
 	}
 	Tree() {
 		root = nullptr;
 	}
-	int get_size() const { return this->size; }
+	int get_size() const {
+		int size = this->size;
+		return size; 
+	}
 	void get_all_elements(vector<int> &elements, Node* current ) {
 
 		if (current == nullptr) {return;}
@@ -104,8 +122,13 @@ public:
 		cout << root->data << " ";
 		Printer_obj(root->right);
 	}
-
+	
 	bool erase(int key) {
+		if (root->left == nullptr && root->right == nullptr&& root->data == key) {
+			all_delete(root);
+			size = 0;
+			return true;
+		}
 		Node* current = root;
 		Node* parent = nullptr;
 		while (current && current->data != key) {
@@ -133,8 +156,6 @@ public:
 			this->size--;
 			return true;
 		}
-
-
 		if (current->right == nullptr) {
 			if (parent && parent->left == current) {
 				parent->left = current->left;

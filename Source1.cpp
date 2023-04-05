@@ -11,7 +11,7 @@ bool mini(int f, int s) {
 Tree union_(const Tree& a, const Tree& b) {
 	Tree result = b;
 	vector<int> elements = a.get_all_data();
-	for (int i = 0; i < a.get_size(); i++) {
+	for (int i = 0; i < elements.size(); i++) {
 		result.insert(elements[i]);
 	}
 	return result;
@@ -136,12 +136,23 @@ void erase_elements(vector<Tree>& coll) {
 	}
 	cout << "\n\t\tВведите элемент корорый нужно удалить - ";
 	val = check();
-	flag = coll[id].erase(val);
-	if (flag) {
-		cout << "\n\t\t\tУдаление прошло успешно!!!";
+	if (coll[id].get_size() == 1) {
+		if (coll[id].chek(val)) {
+			coll.erase(coll.begin() + id);
+			cout << "\n\t\t\tУдаление прошло успешно!!!";
+		}
+		else {
+			cout << "\n\t\tTакого элемента нет. Попробуйте удалить сущесвующий элемент вдруг получится ;)";
+		}
 	}
 	else {
-		cout << "\n\t\t  Tакого элемента нет. Попробуйте удалить сущесвующий элемент вдруг получится ;)";
+		flag = coll[id].erase(val);
+		if (flag) {
+			cout << "\n\t\t\tУдаление прошло успешно!!!";
+		}
+		else {
+			cout << "\n\t\tTакого элемента нет. Попробуйте удалить сущесвующий элемент вдруг получится ;)";
+		}
 	}
 	next_programm();
 }
@@ -167,7 +178,17 @@ int menu1() {
 		cout << "Назад                - [esc]";
 
 		int key = _getch();
-		if (key == 27 || key == 49 || key == 50|| key ==51) { return key; }
+		if ( key == 49 || key == 50|| key ==51) { return key; }
+		else if (key == 27) {
+			while (true) {
+				system("cls");
+				cout << "\n\n\t\tВы уверены что хотите выйти? \n\t\tВсе данные будут удалены\n\n\t\tyes  - [enter]\n\t\tno   - [ esc ]";
+				key = _getch();
+				if (key == 13 || key == 27) {
+					return key;
+				}
+			}
+		}
 	}
 }
 int menu_action() {
@@ -180,9 +201,10 @@ int menu_action() {
 		cout << "\n\t Проверить есть ли элемент           - [ 5 ]";
 		cout << "\n\t Вывести дерево в красивом(нет) виде - [ 6 ]";
 		cout << "\n\t Удалить дерево                      - [ 7 ]";
+		cout << "\n\t Посмотреть размер дерева            - [ 8 ]";
 		cout << "\n\t Назад                               - [esc]";
 		int key = _getch();
-		if (key == 27 || key == 49 || key == 50 || key ==51|| key ==52|| key ==53|| key == 54|| key == 55){ return key; }
+		if (key == 27 || key == 49 || key == 50 || key ==51|| key ==52|| key ==53|| key == 54|| key == 55|| key ==56){ return key; }
 	}
 }
 int selection_menu() {
@@ -201,19 +223,22 @@ void choice_trees_for_union(vector<Tree>& coll) {
 	int id1, id2, flag;
 
 	print_all_collection(coll);
-	cout << "\n\n\t\t Введите индексы множеств, которые хотите объеденить: \n\t Первый id: ";
+	cout << "\n\n\t\t Введите индексы множеств, которые хотите объеденить: \n\tПервый id: ";
 	id1 = check();
-	while (id1 <= coll.size() || id1 < 0) {
+	while (id1 >= coll.size() || id1 < 0) {
 		cout << "\n\n\tВведите существующий id дерева: ";
 		id1 = check();
 	}
 	cout << "\tВторой id: ";
 	id2 = check();
-	while (id2 <= coll.size() || id2 < 0) {
+	while (id2 >= coll.size() || id2 < 0) {
 		cout << "\n\n\tВведите существующий id дерева: ";
 		id2 = check();
 	}
 	Tree result = union_(coll[id1], coll[id2]);
+	system("cls");
+	cout << "\n\n";
+	result.Printer_tree();
 	cout << "\n\t\t Хотите доавить это дерево в коллекцию?";
 	cout << "\n\t\t esc - no";
 	cout << "\n\t\t enter - yes";
@@ -223,11 +248,11 @@ void choice_trees_for_union(vector<Tree>& coll) {
 	}
 	if (flag == 27)
 	{
-		cout << "\n\tХозяин - барин. дерево не добавлено:(";
+		cout << "\n\n\t\tХозяин - барин. дерево не добавлено:(";
 	}
 	else {
 		coll.push_back(result);
-		cout << "\n\tХозяин - барин. дерево  добавлено:)";
+		cout << "\n\n\t\tХозяин - барин. дерево  добавлено:)";
 	}
 	next_programm();
 }
@@ -237,17 +262,22 @@ void choice_trees_for_sd(vector<Tree> &coll){
 
 	print_all_collection(coll);
 	cout << "\n\n\t\t  Введите индексы множеств, из которых хотите получить симметрическую разность";
-	cout << " \n\t Первый id: ";
+	cout << " \n\tПервый id: ";
 	id1 = check();
-	while (id1 <= coll.size() || id1 < 0) {
+	while (id1 >= coll.size() || id1 < 0) {
 		cout << "\n\n\tВведите существующий id дерева: ";
 		id1 = check();
 	}
 	cout << "\tВторой id: ";
 	id2 = check();
-	while (id2 <= coll.size() || id2 < 0) {
+	while (id2 >= coll.size() || id2 < 0) {
 		cout << "\n\n\tВведите существующий id дерева: ";
 		id2 = check();
+	}
+	if (coll[id1] == coll[id2]) {
+		cout << "\n\tПолучится пустое множество";
+		next_programm();
+		return;
 	}
 	Tree result = symmenric_difference(coll[id1], coll[id2]);
 	cout << "\n\t\t Хотите доавить это дерево в коллекцию?";
@@ -328,7 +358,28 @@ void choice_tree_for_delete(vector<Tree>& coll) {
 	}
 	next_programm();
 }
-
+void choice_tree_for_add_element(vector<Tree>& coll) {
+	system("cls");
+	int id, value;
+	print_all_collection(coll);
+	cout << "\n\n\t\tВведите id дерева, в которое хотите добавить элемент: ";
+	id = check();
+	while (id > coll.size() || id < 0) {
+		system("cls");
+		print_all_collection(coll);
+		cout << "\n\n\tВведите существующий id дерева: ";
+		id = check();
+	}
+	cout << "\n\t\tВведите элемент который нужно добавить: ";
+	value = check();
+	if (coll[id].insert(value)) {
+		cout << "\n\n\t\tЭлемент добавлен UwU";
+	}
+	else {
+		cout << "\n\n\t\tУвы такой элемент уже есть QwQ";
+	}
+	next_programm();
+}
 
 void mission() {
 	vector<Tree> collection;
@@ -342,8 +393,7 @@ menu:
 			next_programm();
 			goto menu;
 		}
-		else {return;}
-		
+		else {return;}	
 	}
 	int menu_1 = menu1();
 	switch (menu_1)
@@ -359,6 +409,8 @@ menu:
 	case 51:
 		break;
 	case 27:
+		goto menu;
+	case 13:
 		return;
 	}
 interaction_menu:
@@ -367,11 +419,13 @@ interaction_menu:
 	switch (menu_inter)
 	{
 	case 49:
-		collection.push_back(create_Tree());
-		next_programm();
+		choice_tree_for_add_element(collection);
 		goto interaction_menu;
 	case 50:
 		erase_elements(collection);
+		if (collection.size() == 0) {
+			goto menu;
+		}
 		goto interaction_menu;
 	case 51:
 		choice_trees_for_union(collection);
@@ -387,7 +441,17 @@ interaction_menu:
 		goto interaction_menu;
 	case 55:
 		choice_tree_for_delete(collection);
+		if (collection.size() == 0) {
+			goto menu;
+		}
 		goto interaction_menu;
+	case 56:
+		system("cls");
+		for (int i = 0; i < collection.size(); i++) {
+			collection[i].Printer_tree();
+			cout << "\t" << collection[i].get_size()<<endl;
+		}
+		next_programm();
 	case 27:
 		goto menu;
 	}
