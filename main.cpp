@@ -52,64 +52,33 @@ int check()
 		while (cin.get() != '\n')
 		{
 			system("cls");
-			cout << "\tÂâåäèòå êîððåêòíîå ÷èñëî: ";
+			cout << "\tEnter the correct number: ";
 		}
 	}
 	return number;
 }
-void loading_animation(int value) {
-	system("cls");
 
-	Sleep(400);
-	cout << "\n\n\n\n\t\t\tÑîçäàåì âàøå äåðåâî .......";
-	Sleep(400);
-	system("cls");
-	cout << "\n\n\n\n\t\t\tÑîçäàåì âàøå äåðåâî |......";
-	Sleep(400);
-	system("cls");
-	cout << "\n\n\n\n\t\t\tÑîçäàåì âàøå äåðåâî ||.....";
-	Sleep(400);
-	system("cls");
-	cout << "\n\n\n\n\t\t\tÑîçäàåì âàøå äåðåâî |||....";
-	Sleep(400);
-	system("cls");
-	cout << "\n\n\n\n\t\t\tÑîçäàåì âàøå äåðåâî ||||...";
-	Sleep(400);
-	system("cls");
-	cout << "\n\n\n\n\t\t\tÑîçäàåì âàøå äåðåâî |||||..";
-	Sleep(400);
-	system("cls");
-	cout << "\n\n\n\n\t\t\tÑîçäàåì âàøå äåðåâî ||||||.";
-	Sleep(400);
-	system("cls");
-	cout << "\n\n\n\n\t\t\tÑîçäàåì âàøå äåðåâî |||||||";
-	system("cls");
-	cout << "\n\n\n\n\t\t\tÑîçäàíèå äåðåâà ñ ãîëîâîé " << value << " çàâåðøåíà ";
-	Sleep(2000);
-
-}
 void next_programm() {
-	cout << "\n\n\t\t\t\tÍàæìèòå ëþáóþ êíîïêó, ÷òîáû ïðîäîëæèòü";
+	cout << "\n\n\t\t\t\tPress any key to continue";
 	_getch();
 }
 //interaction with trees
 Tree create_Tree() {
 	system("cls");
 	int root, now_add, adding_el;
-	cout << "\n\n\t\tÂâåäèòå êîðåíü äåðåâà: ";
+	cout << "\n\n\t\tInput root for tree: ";
 	root = check();
 	//loading_animation(root);
 	system("cls");
 	Tree result = Tree(root);
-	cout << "\n\n\t\tÂâåäèòå êîëëè÷åñòâî ýëåìåíòîâ êîòîðîå õîòèòå äîáàâèòü ñåé÷àñ: ";
+	cout << "\n\n\t\tEnter the number of elements you want to add now: ";
 	now_add = check();
 	if (now_add > 0) {
 		for (int i = 0; i < now_add; i++) {
-			cout << "\n\t\t\tÄîáàâèòü ýëåìåíò: ";
+			cout << "\n\t\t\tAdd element: ";
 			adding_el = check();
 			result.insert(adding_el);
 		}
-		cout << "\n\n\t\tÍàâåðíîå âñå ýëåìåíòû áûëè äîáàâëåíû";
 	}
 	return result;
 }
@@ -126,32 +95,32 @@ void erase_elements(vector<Tree>& coll) {
 	int id, count, val;
 	bool flag;
 	print_all_collection(coll);
-	cout << "\n\n\tÂâåäèòå id äåðåâà, èç êîòîðîãî õîòèòå óäàëèòü ýëåìåíò: ";
+	cout << "\n\n\tInput the tree index that you want delete element: ";
 	id = check();
 	while (id > coll.size() - 1 || id < 0) {
 		system("cls");
 		print_all_collection(coll);
-		cout << "\n\n\tÂâåäèòå ñóùåñòâóþùèé id äåðåâà, èç êîòîðîãî õîòèòå óäàëèòü ýëåìåíò: ";
+		cout << "\n\n\tInput correct index: ";
 		id = check();
 	}
-	cout << "\n\t\tÂâåäèòå ýëåìåíò êîðîðûé íóæíî óäàëèòü - ";
+	cout << "\n\t\tInput value that you want erase: ";
 	val = check();
 	if (coll[id].get_size() == 1) {
 		if (coll[id].chek(val)) {
 			coll.erase(coll.begin() + id);
-			cout << "\n\t\t\tÓäàëåíèå ïðîøëî óñïåøíî!!!";
+			cout << "\n\t\t\tDeleted!!!";
 		}
 		else {
-			cout << "\n\t\tTàêîãî ýëåìåíòà íåò. Ïîïðîáóéòå óäàëèòü ñóùåñâóþùèé ýëåìåíò âäðóã ïîëó÷èòñÿ ;)";
+			cout << "\n\t\tIs not deleted";
 		}
 	}
 	else {
 		flag = coll[id].erase(val);
 		if (flag) {
-			cout << "\n\t\t\tÓäàëåíèå ïðîøëî óñïåøíî!!!";
+			cout << "\n\t\t\tDeleted!!!";
 		}
 		else {
-			cout << "\n\t\tTàêîãî ýëåìåíòà íåò. Ïîïðîáóéòå óäàëèòü ñóùåñâóþùèé ýëåìåíò âäðóã ïîëó÷èòñÿ ;)";
+			cout << "\n\t\tIs not deleted";
 		}
 	}
 	next_programm();
@@ -161,8 +130,8 @@ void erase_elements(vector<Tree>& coll) {
 int menu0() {
 	while (true) {
 		system("cls");
-		cout << "\n\t\tÄîáàâèòü ïåðâîå äðåâî - [ 1 ]\n\t\t";
-		cout << "Íàçàä                 - [esc]";
+		cout << "\n\n\t\t\tAdd first Tree - [ 1 ]\n\t\t\t";
+		cout << "Back           - [esc]";
 		int key= _getch();
 		if (key == 27 || key == 49) {
 			return key;
@@ -172,17 +141,17 @@ int menu0() {
 int menu1() {
 	while (true) {
 		system("cls");
-		cout << "\n\t\tÑîçäàòü ëåñ          - [ 1 ]\n\t\t";
-		cout << "Ïîêàçàòü âñå äåðåâüÿ - [ 2 ]\n\t\t";
-		cout << "Äåéñòâèÿ ñ äåðåâüÿìè - [ 3 ]\n\t\t";
-		cout << "Íàçàä                - [esc]";
+		cout << "\n\t\tCreat forest         - [ 1 ]\n\t\t";
+		cout << "Show all trees       - [ 2 ]\n\t\t";
+		cout << "Actions with trees   - [ 3 ]\n\t\t";
+		cout << "Back                 - [esc]";
 
 		int key = _getch();
 		if ( key == 49 || key == 50|| key ==51) { return key; }
 		else if (key == 27) {
 			while (true) {
 				system("cls");
-				cout << "\n\n\t\tÂû óâåðåíû ÷òî õîòèòå âûéòè? \n\t\tÂñå äàííûå áóäóò óäàëåíû\n\n\t\tyes  - [enter]\n\t\tno   - [ esc ]";
+				cout << "\n\n\t\tAre you sure you want to get out? \n\t\tAll data will be deleted\n\n\t\tyes  - [enter]\n\t\tno   - [ esc ]";
 				key = _getch();
 				if (key == 13 || key == 27) {
 					return key;
@@ -194,15 +163,15 @@ int menu1() {
 int menu_action() {
 	while (true) {
 		system("cls");
-		cout << "\n\n\n\t Äîáàâèòü ýëåìåíò â äåðåâî           - [ 1 ]";
-		cout << "\n\t Óäàëèòü ýëåìåíò èç äåðåâà           - [ 2 ]";
-		cout << "\n\t Îáúåäåíèòü 2 ìíîæåñòâà(äåðåâà)      - [ 3 ]";
-		cout << "\n\t Ñèììåòðè÷åñêàÿ ðàçíîñòü 2 ìíîæåñòâ  - [ 4 ]";
-		cout << "\n\t Ïðîâåðèòü åñòü ëè ýëåìåíò           - [ 5 ]";
-		cout << "\n\t Âûâåñòè äåðåâî â êðàñèâîì(íåò) âèäå - [ 6 ]";
-		cout << "\n\t Óäàëèòü äåðåâî                      - [ 7 ]";
-		cout << "\n\t Ïîñìîòðåòü ðàçìåð äåðåâà            - [ 8 ]";
-		cout << "\n\t Íàçàä                               - [esc]";
+		cout << "\n\n\n\tAdd element to the tree             - [ 1 ]";
+		cout << "\n\t Delete element from tree           - [ 2 ]";
+		cout << "\n\t Union 2 trees                      - [ 3 ]";
+		cout << "\n\t Symmetric difference of 2 trees    - [ 4 ]";
+		cout << "\n\t Check element                      - [ 5 ]";
+		cout << "\n\t Nice output to the consol          - [ 6 ]";
+		cout << "\n\t Delete tree                        - [ 7 ]";
+		cout << "\n\t See the number of elements         - [ 8 ]";
+		cout << "\n\t Back                               - [esc]";
 		int key = _getch();
 		if (key == 27 || key == 49 || key == 50 || key ==51|| key ==52|| key ==53|| key == 54|| key == 55|| key ==56){ return key; }
 	}
@@ -223,23 +192,23 @@ void choice_trees_for_union(vector<Tree>& coll) {
 	int id1, id2, flag;
 
 	print_all_collection(coll);
-	cout << "\n\n\t\t Ââåäèòå èíäåêñû ìíîæåñòâ, êîòîðûå õîòèòå îáúåäåíèòü: \n\tÏåðâûé id: ";
+	cout << "\n\n\t\t Input index trees that you want to union: \n\tFirst id: ";
 	id1 = check();
 	while (id1 >= coll.size() || id1 < 0) {
-		cout << "\n\n\tÂâåäèòå ñóùåñòâóþùèé id äåðåâà: ";
+		cout << "\n\n\tInput current id: ";
 		id1 = check();
 	}
-	cout << "\tÂòîðîé id: ";
+	cout << "\tSecond id: ";
 	id2 = check();
 	while (id2 >= coll.size() || id2 < 0) {
-		cout << "\n\n\tÂâåäèòå ñóùåñòâóþùèé id äåðåâà: ";
+		cout << "\n\n\tInput current id: ";
 		id2 = check();
 	}
 	Tree result = union_(coll[id1], coll[id2]);
 	system("cls");
 	cout << "\n\n";
 	result.Printer_tree();
-	cout << "\n\t\t Õîòèòå äîàâèòü ýòî äåðåâî â êîëëåêöèþ?";
+	cout << "\n\t\t Want to add this tree to your collection?";
 	cout << "\n\t\t esc - no";
 	cout << "\n\t\t enter - yes";
 	while (true) {
@@ -248,11 +217,11 @@ void choice_trees_for_union(vector<Tree>& coll) {
 	}
 	if (flag == 27)
 	{
-		cout << "\n\n\t\tÕîçÿèí - áàðèí. äåðåâî íå äîáàâëåíî:(";
+		cout << "\n\n\t\tTree is not added:(";
 	}
 	else {
 		coll.push_back(result);
-		cout << "\n\n\t\tÕîçÿèí - áàðèí. äåðåâî  äîáàâëåíî:)";
+		cout << "\n\n\t\tTree is added:)";
 	}
 	next_programm();
 }
@@ -261,26 +230,26 @@ void choice_trees_for_sd(vector<Tree> &coll){
 	int id1, id2,flag;
 
 	print_all_collection(coll);
-	cout << "\n\n\t\t  Ââåäèòå èíäåêñû ìíîæåñòâ, èç êîòîðûõ õîòèòå ïîëó÷èòü ñèììåòðè÷åñêóþ ðàçíîñòü";
-	cout << " \n\tÏåðâûé id: ";
+	cout << "\n\n\t\t Input index trees that you want to symmetric difference:";
+	cout << " \n\t First id: ";
 	id1 = check();
 	while (id1 >= coll.size() || id1 < 0) {
-		cout << "\n\n\tÂâåäèòå ñóùåñòâóþùèé id äåðåâà: ";
+		cout << "\n\n\t Input current id: ";
 		id1 = check();
 	}
-	cout << "\tÂòîðîé id: ";
+	cout << "\t Second id: ";
 	id2 = check();
 	while (id2 >= coll.size() || id2 < 0) {
-		cout << "\n\n\tÂâåäèòå ñóùåñòâóþùèé id äåðåâà: ";
+		cout << "\n\n\t Input current id: ";
 		id2 = check();
 	}
 	if (coll[id1] == coll[id2]) {
-		cout << "\n\tÏîëó÷èòñÿ ïóñòîå ìíîæåñòâî";
+		cout << "\n\t We got an empty set";
 		next_programm();
 		return;
 	}
 	Tree result = symmenric_difference(coll[id1], coll[id2]);
-	cout << "\n\t\t Õîòèòå äîàâèòü ýòî äåðåâî â êîëëåêöèþ?";
+	cout << "\n\t\t Want to add this tree to your collection?";
 	cout << "\n\t\t esc - no";
 	cout << "\n\t\t enter - yes";
 	while (true) {
@@ -289,11 +258,11 @@ void choice_trees_for_sd(vector<Tree> &coll){
 	}
 	if (flag == 27)
 	{
-		cout << "\n\tÕîçÿèí - áàðèí. äåðåâî íå äîáàâëåíî:(";
+		cout << "\n\tTree is not added:(";
 	}
 	else {
 		coll.push_back(result);
-		cout << "\n\tÕîçÿèí - áàðèí. äåðåâî  äîáàâëåíî:)";
+		cout << "\n\tTree is added:)";
 	}
 	next_programm();
 }
@@ -301,32 +270,32 @@ void choice_tree_for_check(vector<Tree>& coll) {
 	system("cls");
 	int id,value;
 	print_all_collection(coll);
-	cout << "\n\n\t\tÂâåäèòå id äåðåâà, â êîòîðîì õîòèòå ïðîâåðèòü ýëåìåíò: ";
+	cout << "\n\n\t\tInput index trees that you want check element: ";
 	id = check();
 	while (id > coll.size() || id < 0) {
 		system("cls");
 		print_all_collection(coll);
-		cout << "\n\n\tÂâåäèòå ñóùåñòâóþùèé id äåðåâà: ";
+		cout << "\n\n\tInput current id: ";
 		id = check();
 	}
-	cout << "\n\t\tÂâåäèòå ýëåìåíò êîòîðûé íóæíî íàéòè - ";
+	cout << "\n\t\tInput value to be checked: ";
 	value = check();
 	if (coll[id].chek(value)) {
-		cout << "\n\t\t\tÝëåìåíò ïðèñóòñòâóåò, íå áåñïîêîéòåñü!";
+		cout << "\n\t\t\tElement is present !";
 	}
 	else {
-		cout << "\n\t\t\tÒàêèõ çäåñü íå äåðæèì!!!";
+		cout << "\n\t\t\tWe don't keep them here!!!";
 	}
 	next_programm();
 }
 void choice_tree_for_print(vector<Tree>&coll){
 	system("cls");
 	int id;
-	cout << "\t\t\t Ââåäèòå èíäåêñ äåðåâà êîòîðîå õîòèòå âûâåñòè â êîíñîëü: ";
+	cout << "\t\t\t Input index that you want print in concole: ";
 	id = check();
 	while (id >= coll.size() || id < 0) {
 		system("cls");
-		cout << " Ââåäèòå êîððåêòíûé èíäåêñ îò 0 äî " << coll.size() - 1 << " : ";
+		cout << " Input index from 0 to " << coll.size() - 1 << " : ";
 		id = check();
 	}
 	coll[id].Printer_tree_amaizing();
@@ -335,14 +304,14 @@ void choice_tree_for_print(vector<Tree>&coll){
 void choice_tree_for_delete(vector<Tree>& coll) {
 	system("cls");
 	int id,flag;
-	cout << "\t\t\t Ââåäèòå èíäåêñ äåðåâà êîòîðîå õîòèòå óäàëèòü: ";
+	cout << "\t\t\t Input index that want you delete: ";
 	id = check();
 	while (id >= coll.size() || id < 0) {
 		system("cls");
-		cout << " Ââåäèòå êîððåêòíûé èíäåêñ îò 0 äî " << coll.size() - 1 << " : ";
+		cout << " Input index from 0 to " << coll.size() - 1 << " : ";
 		id = check();
 	}
-	cout << "\n\t\tÂû óâåðåííû ÷òî õîòèòå óäàëèòü äåðåâî?\n\t\t esc - no\n\t\t enter - yes";
+	cout << "\n\t\tYou sure that want delete tree?\n\t\t esc - no\n\t\t enter - yes";
 	while (true) {
 		flag = _getch();
 		if (flag == 27 || flag == 13) {
@@ -351,10 +320,10 @@ void choice_tree_for_delete(vector<Tree>& coll) {
 	}
 	if (flag == 13) {
 		coll.erase(coll.begin() + id);
-		cout << "\n\n\tÎîîî íåò âû ñðóáèëè äåðåâî 0_0 ïðèðîäà âàì ñïàñèáî íå ñêàæåò... ";
+		cout << "\n\n\tNature will not thank you... ";
 	}
 	else {
-		cout << "\n\n\t\tÔóóóóóóõ Ãðåòà Òóíáåðã ðàäà";
+		cout << "\n\n\t\tThe tree is saved!!!0w0 ";
 	}
 	next_programm();
 }
@@ -362,21 +331,21 @@ void choice_tree_for_add_element(vector<Tree>& coll) {
 	system("cls");
 	int id, value;
 	print_all_collection(coll);
-	cout << "\n\n\t\tÂâåäèòå id äåðåâà, â êîòîðîå õîòèòå äîáàâèòü ýëåìåíò: ";
+	cout << "\n\n\t\tInput index that you want added element: ";
 	id = check();
 	while (id > coll.size() || id < 0) {
 		system("cls");
 		print_all_collection(coll);
-		cout << "\n\n\tÂâåäèòå ñóùåñòâóþùèé id äåðåâà: ";
+		cout << "\n\n\tInpt cuurent index: ";
 		id = check();
 	}
-	cout << "\n\t\tÂâåäèòå ýëåìåíò êîòîðûé íóæíî äîáàâèòü: ";
+	cout << "\n\t\tInput value that add in tree: ";
 	value = check();
 	if (coll[id].insert(value)) {
-		cout << "\n\n\t\tÝëåìåíò äîáàâëåí UwU";
+		cout << "\n\n\t\tElement added UwU";
 	}
 	else {
-		cout << "\n\n\t\tÓâû òàêîé ýëåìåíò óæå åñòü QwQ";
+		cout << "\n\n\t\tElement not is added QwQ";
 	}
 	next_programm();
 }
@@ -459,7 +428,7 @@ interaction_menu:
 
 
 int main() {
-	setlocale(LC_ALL, "ru");
+	setlocale(LC_ALL, "RUS");
 menu:
 	system("cls");
 	int menu_select = selection_menu();
